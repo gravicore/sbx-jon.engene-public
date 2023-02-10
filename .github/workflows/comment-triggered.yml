@@ -16,6 +16,6 @@ jobs:
         run: |
           echo test
       - name: build example
-        if: contains(github.event.comment.body, '!build')  # check the comment if it contains the keywords
+        if: startsWith(github.event.comment.body, '!build')  # check the comment if it contains the keywords
         run: |
           echo this is the build
