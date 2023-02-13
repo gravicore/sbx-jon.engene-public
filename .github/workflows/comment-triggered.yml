@@ -4,6 +4,11 @@ on:
     types: created
 jobs:
   pull-request-job:
+  env:
+    PR_NUMBER: PR-${{ github.event.number }}
+  environment:
+    name: dev
+    url: $PR_NUMBER
     if: contains(github.event.comment.html_url, '/pull/')    # check if the comments come from pull request, exclude those from issue.
     runs-on: [ubuntu-latest]
     steps:
