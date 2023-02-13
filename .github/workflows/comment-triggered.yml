@@ -9,7 +9,7 @@ jobs:
       PR_NUMBER: PR-${{ github.event.number }}
     environment:
       name: dev
-      url: $PR_NUMBER
+      url: https://github.com/gravicore/sbx-jon.engene-public/pull/${{ env.PR_NUMBER }}
     if: contains(github.event.comment.html_url, '/pull/')    # check if the comments come from pull request, exclude those from issue.
     runs-on: [ubuntu-latest]
     steps:
