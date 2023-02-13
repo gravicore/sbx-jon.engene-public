@@ -4,9 +4,9 @@ on:
     types: created
 jobs:
   pull-request-job:
-    name: Build and Publish
+    name: Build and Publish 
     env:
-      PR_NUMBER: PR-${{ github.event.number }}
+      PR_NUMBER: ${{ github.event.issue.number }}
     environment:
       name: dev
       url: https://github.com/gravicore/sbx-jon.engene-public/pull/${{ env.PR_NUMBER }}
