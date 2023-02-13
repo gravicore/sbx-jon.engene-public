@@ -4,7 +4,7 @@ on:
     types: created
 jobs:
   pull-request-job:
-    name: Build and Publish 
+    name: Build and Publish
     env:
       PR_NUMBER: ${{ github.event.issue.number }}
     environment:
