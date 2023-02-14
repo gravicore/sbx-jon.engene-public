@@ -7,6 +7,7 @@ jobs:
     name: Build and Publish 
     env:
       PR_NUMBER: ${{ github.event.issue.number }}
+      TEST_PR_NUMBER: PR-${{ github.event.issue.number }}
     environment:
       name: dev
       url: https://github.com/gravicore/sbx-jon.engene-public/pull/${{ env.PR_NUMBER }}
@@ -25,3 +26,6 @@ jobs:
         if: startsWith(github.event.comment.body, '!build')  # check the comment if it contains the keywords
         run: |
           echo this is the build
+      - name:
+        run: |
+          echo PR TAG:${{ env.TEST_PR_NUMBER }}
