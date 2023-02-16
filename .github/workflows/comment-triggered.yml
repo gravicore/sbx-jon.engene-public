@@ -2,6 +2,9 @@ name: comment-triggered
 on:
   issue_comment:
     types: created
+
+env:
+  BODY: /test
 jobs:
   pull-request-job:
     name: Build and Publish 
@@ -19,9 +22,9 @@ jobs:
         run: |
           echo say test
       - name: test
-        if: contains(github.event.comment.body, '/test')  # check the comment if it contains the keywords
+        if: contains(${{ env.BODY }}, '/test')  # check the comment if it contains the keywords
         run: |
-          echo test
+          echo "This test step should always run"
       - name: build example
         if: startsWith(github.event.comment.body, '!build')  # check the comment if it contains the keywords
         run: |
