@@ -6,8 +6,9 @@ on:
 env:
   BODY: /test
 jobs:
+    if: ${{ contains(github.event.comment.html_url, '/pull/') && startsWith(github.event.comment.body, '!build') }}
   pull-request-job:
-    name: Build and Publish 
+    name: Build and Publish
     env:
       PR_NUMBER: ${{ github.event.issue.number }}
       TEST_PR_NUMBER: PR-${{ github.event.issue.number }}
@@ -32,3 +33,4 @@ jobs:
       - name:
         run: |
           echo PR TAG:${{ env.TEST_PR_NUMBER }}
+          
