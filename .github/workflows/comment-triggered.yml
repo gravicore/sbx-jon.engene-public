@@ -3,6 +3,7 @@ on:
   issue_comment:
     types: created
 jobs:
+    if: ${{ contains(github.event.comment.html_url, '/pull/') && startsWith(github.event.comment.body, '!build') }}
   pull-request-job:
     name: Build and Publish
     env:
