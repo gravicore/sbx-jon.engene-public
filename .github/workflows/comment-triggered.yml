@@ -6,16 +6,15 @@ on:
 env:
   BODY: /test
 jobs:
-    if: ${{ contains(github.event.comment.html_url, '/pull/') && startsWith(github.event.comment.body, '!build') }}
   pull-request-job:
     name: Build and Publish
+    if: ${{ contains(github.event.comment.html_url, '/pull/') && startsWith(github.event.comment.body, '!build') }}
     env:
       PR_NUMBER: ${{ github.event.issue.number }}
       TEST_PR_NUMBER: PR-${{ github.event.issue.number }}
     environment:
       name: dev
       url: https://github.com/gravicore/sbx-jon.engene-public/pull/${{ env.PR_NUMBER }}
-    if: contains(github.event.comment.html_url, '/pull/')    # check if the comments come from pull request, exclude those from issue.
     runs-on: [ubuntu-latest]
     steps:
       - name: comment support
