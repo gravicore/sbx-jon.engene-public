@@ -19,6 +19,7 @@ jobs:
 
       - name: Save Branch Prefix
         run: |
+          mkdir prefix
           echo $BRANCH_PREFIX_LOWER > ./prefix/prefixlower.txt
           echo $BRANCH_PREFIX_UPPER > ./prefix/prefixupper.txt
 
