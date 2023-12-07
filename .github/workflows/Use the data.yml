@@ -34,7 +34,6 @@ jobs:
       - name: 'Unzip artifact'
         run: unzip pr_number.zip
 
-
         ## cat pr_number
       - name: 'Print artifact'
         run: cat pr_number
