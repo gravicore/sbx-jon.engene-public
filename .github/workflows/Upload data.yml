@@ -1,0 +1,28 @@
+name: Upload data
+
+on:
+  pull_request:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set environment variable
+        run: echo "MY_VARIABLE=example_value" >> $GITHUB_ENV
+
+      - name: Create text file
+        run: |
+          mkdir pr
+          echo "MY_VARIABLE=${MY_VARIABLE}" > my-file.txt
+          mv my-file.txt ./pr/
+
+      - name: Save PR number
+        env:
+          PR_NUMBER: APPLICATION
+        run: |
+          echo $PR_NUMBER > ./pr/pr_number
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pr_number
+          path: pr/
