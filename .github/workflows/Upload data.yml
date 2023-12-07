@@ -12,18 +12,18 @@ jobs:
       - name: Set environment variable
         run: echo "MY_VARIABLE=example_value" >> $GITHUB_ENV
 
-      - name: Create text file
+      - name: Gather Application
         run: |
-          mkdir pr
-          echo "MY_VARIABLE=${MY_VARIABLE}" > my-file.txt
-          mv my-file.txt ./pr/
+          echo "BRANCH_PREFIX_LOWER=dcc" >> $GITHUB_ENV
+          echo "BRANCH_PREFIX_UPPER=DCC" >> $GITHUB_ENV
 
-      - name: Save PR number
-        env:
-          PR_NUMBER: APPLICATION
+      - name: Save Branch Prefix
         run: |
-          echo $PR_NUMBER > ./pr/pr_number
+          echo $BRANCH_PREFIX_LOWER > ./prefix/prefixlower.txt
+          echo $BRANCH_PREFIX_UPPER > ./prefix/prefixupper.txt
+
       - uses: actions/upload-artifact@v3
         with:
-          name: pr_number
-          path: pr/
+          name: branch-prefix
+          path: prefix/
+

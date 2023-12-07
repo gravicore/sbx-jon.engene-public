@@ -20,7 +20,7 @@ jobs:
                run_id: context.payload.workflow_run.id,
             });
             let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "pr_number"
+              return artifact.name == "branch-prefix"
             })[0];
             let download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
@@ -29,30 +29,16 @@ jobs:
                archive_format: 'zip',
             });
             let fs = require('fs');
-            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/pr_number.zip`, Buffer.from(download.data));
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/branch-prefix.zip`, Buffer.from(download.data));
 
       - name: 'Unzip artifact'
-        run: unzip pr_number.zip
+        run: unzip branch-prefix.zip
 
-        ## cat pr_number
-      - name: 'Print artifact'
-        run: cat pr_number
-        ## pass value of cat pr_number into a github env variable
       - name: 'Set env variable'
-        run: echo "PR_NUMBER=$(cat pr_number)" >> $GITHUB_ENV
+        run: |
+          echo "BRANCH_PREFIX_LOWER=$(cat prefixlower.txt)" >> $GITHUB_ENV
+          echo "BRANCH_PREFIX_UPPER=$(cat prefixupper.txt)" >> $GITHUB_ENV
       - name: 'Print env variable'
-        run: echo $PR_NUMBER
-
-      # - name: 'Comment on PR'
-      #   uses: actions/github-script@v6
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     script: |
-      #       let fs = require('fs');
-      #       let issue_number = Number(fs.readFileSync('./pr_number'));
-      #       await github.rest.issues.createComment({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         issue_number: issue_number,
-      #         body: 'Thank you for the PR!'
-      #       });
+        run: |
+          echo $BRANCH_PREFIX_LOWER
+          echo $BRANCH_PREFIX_UPPER
