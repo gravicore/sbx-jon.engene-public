@@ -1,0 +1,29 @@
+name: Upload data
+
+on:
+  pull_request:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Set environment variable
+        run: echo "MY_VARIABLE=example_value" >> $GITHUB_ENV
+
+      - name: Gather Application
+        run: |
+          echo "BRANCH_PREFIX_LOWER=dcc" >> $GITHUB_ENV
+          echo "BRANCH_PREFIX_UPPER=DCC" >> $GITHUB_ENV
+
+      - name: Save Branch Prefix
+        run: |
+          echo $BRANCH_PREFIX_LOWER > ./prefix/prefixlower.txt
+          echo $BRANCH_PREFIX_UPPER > ./prefix/prefixupper.txt
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: branch-prefix
+          path: prefix/
+
