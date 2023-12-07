@@ -36,12 +36,26 @@ jobs:
 
         ## cat pr_number
       - name: 'Print artifact'
-        run: cat pr_number
+        run: echo "MY_VARIABLE=$(cat my-file.txt)" >> $GITHUB_ENV
         ## pass value of cat pr_number into a github env variable
       - name: 'Set env variable'
         run: echo "PR_NUMBER=$(cat pr_number)" >> $GITHUB_ENV
       - name: 'Print env variable'
-        run: echo $PR_NUMBER
+        run: |
+          echo $PR_NUMBER
+          echo $MY_VARIABLE
+
+      - name: 'Print artifact'
+        working-directory: pr
+        run: echo "MY_VARIABLE=$(cat my-file.txt)" >> $GITHUB_ENV
+        ## pass value of cat pr_number into a github env variable
+      - name: 'Set env variable'
+        working-directory: pr
+        run: echo "PR_NUMBER=$(cat pr_number)" >> $GITHUB_ENV
+      - name: 'Print env variable'
+        run: |
+          echo $PR_NUMBER
+          echo $MY_VARIABLE
 
       # - name: 'Comment on PR'
       #   uses: actions/github-script@v6
